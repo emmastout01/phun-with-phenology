@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 function Notes() {
@@ -12,17 +12,29 @@ function Notes() {
         });
     }, []);
 
+    console.log(notes);
     return (
         <div>
             {notes.length && notes.map(note => (
-                <div>
+                <div key={note.id}>
                     <div>
                         {note.location}
                     </div>
                     <div>
                         {note.note_content}
                     </div>
-               
+                    {
+                        note.bird_notes?.length && note.bird_notes.map(birdNote => (
+                            <div key={birdNote.bird_note_id}>
+                                <div>
+                                    {birdNote.bird}
+                                </div>
+                                <div>
+                                    {birdNote.bird_note_content}
+                                </div>
+                            </div>
+                        ))
+                    }
                 </div>
             ))}
 
