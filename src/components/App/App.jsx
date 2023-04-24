@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import RegisterPage from '../../pages/RegisterPage/RegisterPage';
 import NoteDetailsPage from '../../pages/NoteDetails/NoteDetails';
+import AddNotePage from '../../pages/AddNotePage/AddNotePage';
 
 import './App.css';
 
@@ -67,6 +68,14 @@ function App() {
             path="/note/:id"
           >
             <NoteDetailsPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows UserPage else shows LoginPage
+            exact
+            path="/note/create"
+          >
+            <AddNotePage />
           </ProtectedRoute>
 
           <ProtectedRoute

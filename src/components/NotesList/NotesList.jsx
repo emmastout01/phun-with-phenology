@@ -19,9 +19,15 @@ function NotesList() {
     const viewNoteDetails = (noteId) => {
         history.push(`/note/${noteId}`)
     }
+
+    const viewAddNotePage = () => {
+        history.push('/note/create');
+    }
+    
     return (
         <div>
-            <h2>My notes</h2>
+            <h2>Your notes</h2>
+            <button onClick={viewAddNotePage}>New note</button>
             <table className='noteTable'>
                 <thead>
                     <th>Date</th>
