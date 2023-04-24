@@ -4,7 +4,6 @@ import { put, takeLatest } from 'redux-saga/effects';
 // worker Saga: will be fired on "FETCH_NOTES" actions
 function* fetchNotes() {
   try {
-    console.log('fetching notes')
     const response = yield axios.get('/api/notes');
     yield put({ type: 'SET_NOTES', payload: response.data });
   } catch (error) {
@@ -12,8 +11,18 @@ function* fetchNotes() {
   }
 }
 
+function* fetchNoteDetails() {
+    try {
+        const response = yield axios.get('/api/notes/:id');
+        yield put({ type: 'SET_NOTE_DETAILS', payload: response.data });
+      } catch (error) {
+        console.log('Note details get request failed', error);
+      }
+}
+
 function* notesSaga() {
   yield takeLatest('FETCH_NOTES', fetchNotes);
+  yield takeLatest('FETCH_NOTE_DETAILS', fetchNoteDetails);
 }
 
 export default notesSaga;

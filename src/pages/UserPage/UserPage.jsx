@@ -1,6 +1,6 @@
 import React from 'react';
 import LogOutButton from '../../components/LogOutButton/LogOutButton';
-import Notes from '../../components/Notes/Notes';
+import Notes from '../../components/NotesList/NotesList';
 import {useSelector} from 'react-redux';
 
 function UserPage() {

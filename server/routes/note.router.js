@@ -24,7 +24,6 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   GROUP BY note.id, note.user_id, note.date, note.time, note.location, note.content;`;
   pool.query(query)
   .then(result => {
-    console.log({result});
     res.send(result.rows)
   }).catch(err => {
     console.log('error in GET notes: ', err);
