@@ -18,28 +18,27 @@ function NoteDetails() {
     return (
         <div>
             <div>
-                <div>
-                    {note.location}
-                </div>
-                <div>
-                    {note.note_content}
-                </div>
-                {
-                    note.bird_notes?.length && note.bird_notes.map(birdNote => (
-                        <div key={birdNote.bird_note_id}>
-                            <div>
-                                {birdNote.bird}
-                            </div>
-                            <img src={birdNote.bird_photo} height='300px' width='300px' />
-                            <div>
-                                {birdNote.bird_note_content}
-                            </div>
-                        </div>
-                    ))
-                }
+                {note.location}
             </div>
+            <div>
+                {note.note_content}
+            </div>
+            {
+                note.bird_notes?.length && note.bird_notes.map(birdNote => (
+                    <div key={birdNote.bird_note_id}>
+                        <div>
+                            {birdNote.bird}
+                        </div>
+                        <img src={birdNote.bird_photo} height='300px' width='300px' />
+                        <div>
+                            {birdNote.bird_note_content}
+                        </div>
+                    </div>
+                ))
+            }
         </div>
-    );
+    )
+
 }
 
 export default NoteDetails;

@@ -11,9 +11,9 @@ function* fetchNotes() {
   }
 }
 
-function* fetchNoteDetails() {
+function* fetchNoteDetails(action) {
     try {
-        const response = yield axios.get('/api/notes/:id');
+        const response = yield axios.get(`/api/notes/${action.payload}`);
         yield put({ type: 'SET_NOTE_DETAILS', payload: response.data });
       } catch (error) {
         console.log('Note details get request failed', error);

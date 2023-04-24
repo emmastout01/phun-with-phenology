@@ -24,12 +24,41 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   GROUP BY note.id, note.user_id, note.date, note.time, note.location, note.content;`;
   pool.query(query)
   .then(result => {
-    res.send(result.rows)
+    res.send(result.rows);
   }).catch(err => {
     console.log('error in GET notes: ', err);
     res.sendStatus(500);
   })
 });
+
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+    const query = `SELECT 
+    note.id,
+    note.user_id, 
+    note.date, 
+    note.time, 
+    note.location, 
+    note.content as note_content, 
+    json_agg(json_build_object(
+      'bird_note_id', bird.id,
+      'bird_note_content', bird_note.content, 
+      'bird', bird.name, 
+      'bird_photo', bird.photo)) as bird_notes 
+    FROM "note"
+    LEFT JOIN "bird_note" ON "note".id = "bird_note".note_id 
+    LEFT JOIN "bird" ON "bird_note".bird_id = "bird".id 
+    WHERE note.id = $1
+    GROUP BY note.id, note.user_id, note.date, note.time, note.location, note.content;`;
+    pool.query(query, [id])
+    .then(result => {
+      // Only send the first row because there will only be one row
+      res.send(result.rows[0])
+    }).catch(err => {
+      console.log('error in GET notes: ', err);
+      res.sendStatus(500);
+    })
+})
 
 /**
  * POST notes route
