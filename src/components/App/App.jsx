@@ -73,7 +73,7 @@ function App() {
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
-            path="/note/create"
+            path="/notes/create"
           >
             <AddNotePage />
           </ProtectedRoute>

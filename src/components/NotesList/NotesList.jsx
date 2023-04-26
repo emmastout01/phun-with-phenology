@@ -21,9 +21,9 @@ function NotesList() {
     }
 
     const viewAddNotePage = () => {
-        history.push('/note/create');
+        history.push('/notes/create');
     }
-    
+
     return (
         <div>
             <h2>Your notes</h2>
