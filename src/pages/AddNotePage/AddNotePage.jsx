@@ -6,19 +6,19 @@
     const [date, setDate] = useState('');
     const [zipCode, setZipCode] = useState('55409');
     const dispatch = useDispatch();
+    const weather = useSelector(store => store.weather);
 
     const changeDate = (e) => {
         setDate(e.target.value)
         // get weather for specific date
         // For history API 'dt' should be on or after 1st Jan, 2010 in yyyy-MM-dd format (i.e. dt=2010-01-01)
         dispatch({
-            TYPE: 'FETCH_WEATHER_FOR_DATE',
+            type: 'FETCH_WEATHER_FOR_DATE',
             payload: {
-                date,
+                date: e.target.value,
                 zipCode 
             }
         })
-        
     } 
 
     // Calendar input
