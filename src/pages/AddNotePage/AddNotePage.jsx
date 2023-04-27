@@ -1,12 +1,30 @@
  import { useState, useEffect } from 'react';
+ import { useDispatch, useSelector } from 'react-redux';
+ import { useHistory } from 'react-router-dom';
  
  function AddNotePage() {
     const [date, setDate] = useState('');
+    const [zipCode, setZipCode] = useState('55409');
+    const dispatch = useDispatch();
+
+    const changeDate = (e) => {
+        setDate(e.target.value)
+        // get weather for specific date
+        // For history API 'dt' should be on or after 1st Jan, 2010 in yyyy-MM-dd format (i.e. dt=2010-01-01)
+        dispatch({
+            TYPE: 'FETCH_WEATHER_FOR_DATE',
+            payload: {
+                date,
+                zipCode 
+            }
+        })
+        
+    } 
 
     // Calendar input
     return (
         <div>
-            <input type='date' value={date}  onChange={() => setDate(e.target.value)} />
+            <input type='date' value={date}  onChange={(e) => changeDate(e)} />
             Add note page
         </div>
     )
