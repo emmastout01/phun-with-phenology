@@ -7,9 +7,9 @@ function* fetchWeatherForDate(action) {
     console.log(process.env);
     try {
         const response = yield axios.get(`/api/weather/${date}/${zipCode}`);
-        console.log({response});
         yield put({ type: 'SET_WEATHER', payload: response.data });
     } catch (error) {
+        yield put({ type: 'SET_WEATHER', payload: {} });
         console.log('Weather get request failed', error);
     }
 }
