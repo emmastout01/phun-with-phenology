@@ -81,14 +81,12 @@ function AddNotePage() {
             <input type='text' placeholder='Location' value={location} onChange={(e) => setLocation(e.target.value)} />
             <textarea placeholder='Notes' value={content} onChange={(e) => setContent(e.target.value)} rows="10" cols="50" />
             {
-                birds.length && birds.map(bird => {
-                    (
-                        <>
+                birds.length && birds.map(bird => (
+                    <>
                         <p>{bird.name}</p>
                         <img width='100px' height='100px' src={bird.photo} />
-                        </>
-                    )
-                })
+                    </>
+                ))
             }
             <button onClick={addNote}>Add Entry</button>
         </div>
