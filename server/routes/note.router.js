@@ -11,6 +11,9 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   note.id,
   note.user_id, 
   note.date, 
+  note.weather_high,
+  note.weather_low,
+  note.weather_condition_text,
   note.location
   FROM "note"`;
     pool.query(query)
@@ -28,6 +31,10 @@ router.get('/:id', (req, res) => {
     note.id,
     note.user_id, 
     note.date, 
+    note.weather_high,
+    note.weather_low,
+    note.weather_condition_text,
+    note.weather_condition_image,
     note.time, 
     note.location, 
     note.content as note_content, 

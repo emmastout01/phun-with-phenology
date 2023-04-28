@@ -20,6 +20,13 @@ function NoteDetails() {
     return (
         <div>
             <div><b>Date:</b> {new Date(note.date).toLocaleDateString('en-US', dateOptions)}</div>
+            {note.weather_high && (
+                <div>
+                    <div>{note.weather_high} &deg;F | {note.weather_low} &deg;F | {note.weather_condition_text}</div>
+                    <img src={note.weather_condition_image} alt={note.weather_condition_text} />
+                </div>
+            )}
+
             <div>
                 <b>Location:</b> {note.location}
             </div>
@@ -27,19 +34,19 @@ function NoteDetails() {
                 <b>Notes:</b> {note.note_content}
             </div>
             <div><b>Birds seen:</b>
-            {
-                note.bird_notes?.length && note.bird_notes.map(birdNote => (
-                    <div key={birdNote.bird_note_id}>
-                        <div>
-                            {birdNote.bird}
+                {
+                    note.bird_notes?.length && note.bird_notes.map(birdNote => (
+                        <div key={birdNote.bird_note_id}>
+                            <div>
+                                {birdNote.bird}
+                            </div>
+                            {birdNote.bird_photo && <img src={birdNote.bird_photo} height='200px' width='200px' />}
+                            <div>
+                                {birdNote.bird_note_content}
+                            </div>
                         </div>
-                        {birdNote.bird_photo && <img src={birdNote.bird_photo} height='200px' width='200px' />}
-                        <div>
-                            {birdNote.bird_note_content}
-                        </div>
-                    </div>
-                ))
-            }
+                    ))
+                }
             </div>
         </div>
     )

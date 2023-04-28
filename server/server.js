@@ -10,6 +10,7 @@ const passport = require('./strategies/user.strategy');
 // Route includes
 const userRouter = require('./routes/user.router');
 const notesRouter = require('./routes/note.router');
+const birdRouter = require('./routes/bird.router');
 const weatherRouter = require('./routes/weather.router');
 
 
@@ -28,6 +29,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/notes', notesRouter);
 app.use('/api/weather', weatherRouter);
+app.use('/api/bird', birdRouter);
 
 // Serve static files
 app.use(express.static('build'));

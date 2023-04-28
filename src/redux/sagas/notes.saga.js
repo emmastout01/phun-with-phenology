@@ -24,6 +24,7 @@ function* addNote(action) {
   try {
     yield axios.post(`/api/notes`, action.payload);
     yield put({ type: 'FETCH_NOTES' });
+    yield put({type: 'CLEAR_WEATHER'});
   } catch (error) {
     console.log('Note details post request failed', error);
   }

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import './NotesList.css';
 
 
 function NotesList() {
@@ -24,6 +25,8 @@ function NotesList() {
         history.push('/notes/create');
     }
 
+    console.log(notes[0]);
+
     return (
         <div>
             <h2>Your notes</h2>
@@ -33,13 +36,14 @@ function NotesList() {
                     <th>Date</th>
                     <th>Weather</th>
                     <th>Location</th>
+                    <th />
                 </thead>
                 <tbody>
 
                     {notes.length && notes.map(note => (
                         <tr key={note.id} >
                             <td>{new Date(note.date).toLocaleDateString('en-US', dateOptions)}</td>
-                            <td>High 45, Low 38</td>
+                            <td>{note.weather_high} &deg;F | {note.weather_low} &deg;F | {note.weather_condition_text}</td>
                             <td>{note.location}</td>
                             <td><button onClick={() => viewNoteDetails(note.id)}>View note</button></td>
                         </tr>

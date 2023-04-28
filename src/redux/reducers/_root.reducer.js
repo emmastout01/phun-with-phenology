@@ -4,6 +4,7 @@ import user from './user.reducer';
 import notes from './notes.reducer';
 import noteDetails from './noteDetails.reducer';
 import weather from './weather.reducer';
+import birds from './birds.reducer';
 
 
 
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   notes,
   noteDetails,
+  birds,
   weather
 });
 

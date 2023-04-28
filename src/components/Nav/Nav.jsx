@@ -32,6 +32,10 @@ function Nav() {
               Info Page
             </Link>
 
+            <Link className="navLink" to="/notes/create">
+              New Note
+            </Link>
+
             <LogOutButton className="navLink" />
           </>
         )}

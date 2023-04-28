@@ -8,11 +8,20 @@ function AddNotePage() {
     const [time, setTime] = useState('');
     const [location, setLocation] = useState('');
     const [content, setContent] = useState('');
+    const [birdNotes, setBirdNotes] = useState([]);
     const dispatch = useDispatch();
+    const history = useHistory();
     const weather = useSelector(store => store.weather);
     const weatherData = weather.forecast ? weather.forecast.forecastday[0].day : null;
     const weatherLocation = weather.location ? weather.location.name : null;
     const userId = useSelector(store => store.user.id);
+    const birds = useSelector(store => store.birds);
+
+    useEffect(() => {
+        dispatch({
+            type: 'FETCH_BIRDS'
+        })
+    }, []);
 
     useEffect(() => {
         // Upon changing the date or zip code, 
@@ -39,12 +48,18 @@ function AddNotePage() {
                 location,
                 weatherHigh: weatherData?.maxtemp_f ?? '',
                 weatherLow: weatherData?.mintemp_f ?? '',
-                weatherConditionText: weatherData?.condition?.text ?? '', 
+                weatherConditionText: weatherData?.condition?.text ?? '',
                 weatherConditionImage: weatherData?.condition?.icon ?? '',
-                birdNotes: [],
+                birdNotes,
                 content
             }
-        })
+        });
+        history.push('/');
+    }
+
+    const addBirdNote = () => {
+        // EMMA TODO make this dynamic data
+        setBirdNotes([...birdNotes, { bird_id: '1', content: 'bird note content' }]);
     }
 
     return (
@@ -65,6 +80,16 @@ function AddNotePage() {
             <input type='text' placeholder='Time' value={time} onChange={(e) => setTime(e.target.value)} />
             <input type='text' placeholder='Location' value={location} onChange={(e) => setLocation(e.target.value)} />
             <textarea placeholder='Notes' value={content} onChange={(e) => setContent(e.target.value)} rows="10" cols="50" />
+            {
+                birds.length && birds.map(bird => {
+                    (
+                        <>
+                        <p>{bird.name}</p>
+                        <img width='100px' height='100px' src={bird.photo} />
+                        </>
+                    )
+                })
+            }
             <button onClick={addNote}>Add Entry</button>
         </div>
     )
