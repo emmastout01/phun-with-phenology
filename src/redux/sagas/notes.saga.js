@@ -20,9 +20,19 @@ function* fetchNoteDetails(action) {
       }
 }
 
+function* addNote(action) {
+  try {
+    yield axios.post(`/api/notes`, action.payload);
+    yield put({ type: 'FETCH_NOTES' });
+  } catch (error) {
+    console.log('Note details post request failed', error);
+  }
+}
+
 function* notesSaga() {
   yield takeLatest('FETCH_NOTES', fetchNotes);
   yield takeLatest('FETCH_NOTE_DETAILS', fetchNoteDetails);
+  yield takeLatest('ADD_NOTE', addNote);
 }
 
 export default notesSaga;

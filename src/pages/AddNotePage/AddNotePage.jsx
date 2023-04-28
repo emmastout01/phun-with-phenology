@@ -4,31 +4,54 @@ import { useHistory } from 'react-router-dom';
 
 function AddNotePage() {
     const [date, setDate] = useState('');
-    const [zipCode, setZipCode] = useState('55409');
+    const [zipCode, setZipCode] = useState('');
+    const [time, setTime] = useState('');
+    const [location, setLocation] = useState('');
+    const [content, setContent] = useState('');
     const dispatch = useDispatch();
     const weather = useSelector(store => store.weather);
     const weatherData = weather.forecast ? weather.forecast.forecastday[0].day : null;
     const weatherLocation = weather.location ? weather.location.name : null;
+    const userId = useSelector(store => store.user.id);
 
-    // Upon changing the date, display the weather for that date in the zip code where your walk happened
-    // EMMA TODO set zip code too
-    const changeDate = (e) => {
-        setDate(e.target.value)
-        // get weather for specific date
+    useEffect(() => {
+        // Upon changing the date or zip code, 
+        // display the weather for that date in the zip code where your walk happened
         // Weather API will only get weather if date is within the last 7 days
+        if (date && zipCode.length === 5) {
+            dispatch({
+                type: 'FETCH_WEATHER_FOR_DATE',
+                payload: {
+                    date,
+                    zipCode
+                }
+            })
+        }
+    }, [date, zipCode])
+
+    const addNote = () => {
         dispatch({
-            type: 'FETCH_WEATHER_FOR_DATE',
+            type: 'ADD_NOTE',
             payload: {
-                date: e.target.value,
-                zipCode
+                userId,
+                date,
+                time,
+                location,
+                weatherHigh: weatherData?.maxtemp_f ?? '',
+                weatherLow: weatherData?.mintemp_f ?? '',
+                weatherConditionText: weatherData?.condition?.text ?? '', 
+                weatherConditionImage: weatherData?.condition?.icon ?? '',
+                birdNotes: [],
+                content
             }
         })
     }
 
     return (
         <div>
+            <input type='text' placeholder='Zip code' value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
             {/* Calendar input */}
-            <input type='date' value={date} onChange={(e) => changeDate(e)} />
+            <input type='date' value={date} onChange={(e) => setDate(e.target.value)} />
             {/* Display weather data if it is available */}
             {weatherData && (
                 <div>
@@ -39,7 +62,10 @@ function AddNotePage() {
                     <img src={weatherData.condition.icon} alt={weatherData.condition.text} />
                 </div>
             )}
-            Add note page
+            <input type='text' placeholder='Time' value={time} onChange={(e) => setTime(e.target.value)} />
+            <input type='text' placeholder='Location' value={location} onChange={(e) => setLocation(e.target.value)} />
+            <textarea placeholder='Notes' value={content} onChange={(e) => setContent(e.target.value)} rows="10" cols="50" />
+            <button onClick={addNote}>Add Entry</button>
         </div>
     )
 

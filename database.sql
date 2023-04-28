@@ -9,13 +9,16 @@ CREATE TABLE "user" (
     "password" VARCHAR (1000) NOT NULL
 );
 
--- EMMA TODO: I think I need to store weather - high, low + photo - here too
 CREATE TABLE "note" (
     "id" SERIAL PRIMARY KEY,
     "user_id" INTEGER REFERENCES "user",
     "date" DATE,
     "time" VARCHAR (40),
     "location" VARCHAR (1000),
+    "weather_high" VARCHAR (10),
+    "weather_low" VARCHAR (10),
+    "weather_condition_text" VARCHAR (200),
+    "weather_condition_image" VARCHAR (300),
     "content" TEXT
     );
     

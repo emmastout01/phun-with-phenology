@@ -55,7 +55,7 @@ router.get('/:id', (req, res) => {
  * POST notes route
  */
 router.post('/', rejectUnauthenticated, async (req, res) => {
-    const { userId, date, time, location, content, birdNotes } = req.body;
+    const { userId, date, time, location, content, birdNotes, weatherHigh, weatherLow, weatherConditionText, weatherConditionImage } = req.body;
 
     // note: we don't try/catch this because if connecting throws an exception
     // we don't need to dispose of the client (it will be undefined)
@@ -63,11 +63,11 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 
     try {
         await client.query('BEGIN')
-        const noteQuery = `INSERT INTO "note" ("user_id", "date", "time", "location", "content") 
-                           VALUES ($1, $2, $3, $4, $5) RETURNING id;`
+        const noteQuery = `INSERT INTO "note" ("user_id", "date", "time", "location", "weather_high", "weather_low", "weather_condition_text", "weather_condition_image", "content") 
+                           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id;`
         const birdNoteQuery = `INSERT INTO "bird_note" ("note_id", "bird_id", "content") 
                                VALUES ($1, $2, $3);`
-        const noteResults = await client.query(noteQuery, [userId, date, time, location, content]);
+        const noteResults = await client.query(noteQuery, [userId, date, time, location, weatherHigh, weatherLow, weatherConditionText, weatherConditionImage, content]);
         for (birdNote of birdNotes) {
             await client.query(birdNoteQuery, [noteResults.rows[0].id, birdNote.bird_id, birdNote.content]);
         }
