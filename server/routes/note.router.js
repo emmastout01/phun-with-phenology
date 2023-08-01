@@ -25,7 +25,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         })
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', rejectUnauthenticated, (req, res) => {
     const { id } = req.params;
     const query = `SELECT 
     note.id,
